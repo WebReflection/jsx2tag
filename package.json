@@ -1,0 +1,46 @@
+{
+  "name": "jsx2tag",
+  "version": "0.0.2",
+  "description": "Enable JSX for Template Literal Tags based projects",
+  "main": "./cjs/index.js",
+  "scripts": {
+    "build": "npm run cjs && npm run test",
+    "cjs": "ascjs --no-default esm cjs",
+    "coveralls": "c8 report --reporter=text-lcov | coveralls",
+    "test": "cd test; npx babel index.jsx -d ./ && c8 node index.js && rm -rf ../coverage && mv coverage ../"
+  },
+  "keywords": [
+    "JSX",
+    "template",
+    "tag",
+    "transformer"
+  ],
+  "author": "Andrea Giammarchi",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-transform-react-jsx": "^7.14.3",
+    "ascjs": "^5.0.1",
+    "c8": "^7.7.2",
+    "coveralls": "^3.1.0",
+    "uhtml-ssr": "^0.6.2"
+  },
+  "module": "./esm/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "default": "./cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebReflection/jsx2tag.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WebReflection/jsx2tag/issues"
+  },
+  "homepage": "https://github.com/WebReflection/jsx2tag#readme"
+}

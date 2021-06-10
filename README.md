@@ -11,14 +11,10 @@ Enable JSX for Template Literal Tags based projects.
 
 ### Features
 
-  * a `createPragma(tag, cache = new Map)` utility to have a `React.createElement` like function to use as *pragma*
-  * a `bind` utility to mimic `.prop=${value}`
+  * a `createPragma(tag, config?)` utility to have a `React.createElement` like function to use as *pragma*
+  * a `bind` utility to mimic `.prop=${value}` in the template
   * automatic `onEventName` to `@eventName` conversion
-  * automatic `?prop=${value}` conversion, when the property is boolean
-
-**TODO**
-
-- [ ] the pragma currently understands common `html` and `svg` template literal tag library, but it's not clear how to have both simultaneously
+  * automatic `?prop=${value}` conversion in the template, when the property is boolean
 
 
 ### Example
@@ -33,9 +29,9 @@ const {render, html} = require('uhtml-ssr');
 const {bind, createPragma} = require('jsx2tag');
 
 // create your `h` / pragma function
-// pass the tag, and optionally a cache (Map),
-// so you can clear it when/if ever needed.
 const h = createPragma(html);
+// if your env works already with `React.createElement`, use:
+// const React = {createElement: createPragma(html)};
 
 // any component (passed as template value)
 const Bold = ({children}) => html`<strong>${children}</strong>`;

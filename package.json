@@ -3,11 +3,13 @@
   "version": "0.0.4",
   "description": "Enable JSX for Template Literal Tags based projects",
   "main": "./cjs/index.js",
+  "types": "./index.d.ts",
   "scripts": {
-    "build": "npm run cjs && npm run test",
+    "build": "npm run cjs && npm run test && npm run types",
     "cjs": "ascjs --no-default esm cjs",
     "coveralls": "c8 report --reporter=text-lcov | coveralls",
-    "test": "cd test; npx babel index.jsx -d ./ && c8 node index.js && rm -rf ../coverage && mv coverage ../"
+    "test": "cd test; npx babel index.jsx -d ./ && c8 node index.js && rm -rf ../coverage && mv coverage ../",
+    "types": "tsc --declaration --allowJs --emitDeclarationOnly --outDir ./ esm/index.js"
   },
   "keywords": [
     "JSX",
@@ -24,6 +26,7 @@
     "ascjs": "^5.0.1",
     "c8": "^7.7.2",
     "coveralls": "^3.1.0",
+    "typescript": "^4.3.2",
     "uhtml-ssr": "^0.6.3"
   },
   "module": "./esm/index.js",

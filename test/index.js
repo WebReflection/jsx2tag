@@ -15,8 +15,14 @@ const h = createPragma(html); // any component (passed as template value)
 
 function Bold() {
   return 'strong';
-} // any generic value
+} // test ube
 
+
+function World() {
+  return World.tagName;
+}
+
+World.tagName = 'div'; // any generic value
 
 const test = 123; // test it!
 
@@ -29,10 +35,10 @@ const myDocument = h("p", {
   disabled: true
 }), h("span", {
   id: "greetings"
-}, "Hello"));
+}, "Hello"), " ", h(World, null));
 /* c8 ignore start */
 
-const expected = `<p class="what" test="123"><strong>Hello</strong>, <input type="password" disabled><span id="greetings">Hello</span></p>`;
+const expected = `<p class="what" test="123"><strong>Hello</strong>, <input type="password" disabled><span id="greetings">Hello</span> <div></div></p>`;
 
 if (expected !== render(String, myDocument)) {
   console.error('got     ', render(String, myDocument));

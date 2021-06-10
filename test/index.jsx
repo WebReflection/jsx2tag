@@ -12,6 +12,10 @@ function Bold() {
   return 'strong';
 }
 
+// test ube
+function World() { return World.tagName; }
+World.tagName = 'div';
+
 // any generic value
 const test = 123;
 
@@ -19,12 +23,12 @@ const test = 123;
 const myDocument = (
   <p class="what" test={bind(test)} onClick={console.log}>
     <Bold>Hello</Bold>, <input type="password" disabled={true} />
-    <span id="greetings">Hello</span>
+    <span id="greetings">Hello</span> <World />
   </p>
 );
 
 /* c8 ignore start */
-const expected = `<p class="what" test="123"><strong>Hello</strong>, <input type="password" disabled><span id="greetings">Hello</span></p>`;
+const expected = `<p class="what" test="123"><strong>Hello</strong>, <input type="password" disabled><span id="greetings">Hello</span> <div></div></p>`;
 if (expected !== render(String, myDocument)) {
   console.error('got     ', render(String, myDocument));
   console.error('expected', expected);

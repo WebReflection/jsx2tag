@@ -1,9 +1,39 @@
 'use strict';
 /*! (c) Andrea Giammarchi - ISC */
 
+function Bound(_) {
+  this._ = _;
+}
+
 const empty = /^(?:area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/i;
 
 const er = '<☠>';
+
+const re = /^on([A-Z])/;
+const place = (_, $) => ('@' + $.toLowerCase());
+
+/**
+ * Return the `name` and `value` to use with an attribute.
+ * @param {string} name the attribute name.
+ * @param {any} value the attribute value.
+ * @returns {object} An object with `name` and `value` fields.
+ */
+const attribute = (name, value) => {
+  const type = typeof value;
+  switch (type) {
+    case 'string':
+      return {name, value};
+    case 'boolean':
+      return {name: '?' + name, value};
+    case 'object':
+      if (value instanceof Bound)
+        return {name: '.' + name, value: value._};
+  }
+  return {name: name.replace(re, place), value};
+};
+
+const bind = value => new Bound(value);
+exports.bind = bind;
 
 /**
  * Return an `h` / pragma function usable with JSX transformation.
@@ -11,7 +41,7 @@ const er = '<☠>';
  * @param {Map<string,string[]>?} cache A cache to avoid passing along different arrays per same template / values.
  * @returns {function} The `h` / pragma function to use with JSX.
  */
-module.exports = (tag, cache) => {
+const createPragma = (tag, cache) => {
   if (!cache)
     cache = new Map;
   return function h(entry, attributes) {
@@ -25,8 +55,9 @@ module.exports = (tag, cache) => {
     }
     else
       template[i] += entry;
-    for (const name in attributes) {
-      args.push(attributes[name]);
+    for (const key in attributes) {
+      const {name, value} = attribute(key, attributes[key]);
+      args.push(value);
       template[i] += ` ${name}="`;
       i = template.push('"') - 1;
     }
@@ -61,3 +92,4 @@ module.exports = (tag, cache) => {
     return tag.apply(this, args);
   };
 };
+exports.createPragma = createPragma;

@@ -5,7 +5,10 @@ const {
 } = require('uhtml-ssr'); // this module
 
 
-const createPragma = require('../cjs/index.js'); // create your `h` / pragma function
+const {
+  bind,
+  createPragma
+} = require('../cjs/index.js'); // create your `h` / pragma function
 
 
 const h = createPragma(html); // any component (passed as template value)
@@ -19,15 +22,17 @@ const test = 123; // test it!
 
 const myDocument = h("p", {
   class: "what",
-  test: test
+  test: bind(test),
+  onClick: console.log
 }, h(Bold, null, "Hello"), ", ", h("input", {
-  type: "password"
+  type: "password",
+  disabled: true
 }), h("span", {
   id: "greetings"
 }, "Hello"));
 /* c8 ignore start */
 
-const expected = `<p class="what" test="123"><strong>Hello</strong>, <input type="password"><span id="greetings">Hello</span></p>`;
+const expected = `<p class="what" test="123"><strong>Hello</strong>, <input type="password" disabled><span id="greetings">Hello</span></p>`;
 
 if (expected !== render(String, myDocument)) {
   console.error('got     ', render(String, myDocument));

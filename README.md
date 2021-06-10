@@ -1,5 +1,7 @@
 # JSX2TAG
 
+[![Build Status](https://travis-ci.com/WebReflection/jsx2tag.svg?branch=main)](https://travis-ci.com/WebReflection/jsx2tag) [![Coverage Status](https://coveralls.io/repos/github/WebReflection/jsx2tag/badge.svg?branch=main)](https://coveralls.io/github/WebReflection/jsx2tag?branch=main)
+
 Enable JSX for Template Literal Tags based projects.
 
 

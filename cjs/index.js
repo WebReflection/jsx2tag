@@ -1,14 +1,8 @@
 'use strict';
 /*! (c) Andrea Giammarchi - ISC */
 
-function Bound(_) {
-  this._ = _;
-}
-
 const empty = /^(?:area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/i;
-
 const er = '<☠>';
-
 const re = /^on([A-Z])/;
 const place = (_, $) => ('@' + $.toLowerCase());
 
@@ -44,8 +38,12 @@ exports.bind = bind;
 const createPragma = (tag, cache) => {
   if (!cache)
     cache = new Map;
-  return function h(entry, attributes) {
+  return function h(entry, attributes, ...children) {
     const component = typeof entry === 'function';
+    if (component && !('tagName' in entry)) {
+      (attributes || (attributes = {})).children = children;
+      return 'prototype' in entry ? new entry(attributes) : entry(attributes);
+    }
     const template = ['<'];
     const args = [null];
     let i = 0;
@@ -62,9 +60,9 @@ const createPragma = (tag, cache) => {
       i = template.push('"') - 1;
     }
     template[i] += '>';
-    const {length} = arguments;
-    for (let child, j = 2; j < length; j++) {
-      child = arguments[j];
+    const {length} = children;
+    for (let child, j = 0; j < length; j++) {
+      child = children[j];
       if (typeof child === 'string')
         template[i] += child;
       else {
@@ -73,8 +71,8 @@ const createPragma = (tag, cache) => {
       }
     }
     if (
-      2 < length ||
-      (component && !empty.test(component.tagName || '')) ||
+      0 < length ||
+      (component && !empty.test(component.tagName)) ||
       !empty.test(entry)
     ) {
       if (component) {
@@ -93,3 +91,7 @@ const createPragma = (tag, cache) => {
   };
 };
 exports.createPragma = createPragma;
+
+function Bound(_) {
+  this._ = _;
+}

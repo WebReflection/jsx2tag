@@ -13,9 +13,20 @@ const {
 
 const h = createPragma(html); // any component (passed as template value)
 
-function Bold() {
-  return 'strong';
-} // test ube
+const Bold = ({
+  children
+}) => html`<strong>${children}</strong>`;
+
+class Span {
+  constructor({
+    id,
+    children
+  }) {
+    return html`<span id=${id}>${children}</span>`;
+  }
+
+} // This is specific for ube or classes with a `tagName`
+// these well be used as interpolations values
 
 
 function World() {
@@ -33,7 +44,7 @@ const myDocument = h("p", {
 }, h(Bold, null, "Hello"), ", ", h("input", {
   type: "password",
   disabled: true
-}), h("span", {
+}), h(Span, {
   id: "greetings"
 }, "Hello"), " ", h(World, null));
 /* c8 ignore start */

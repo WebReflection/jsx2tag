@@ -18,6 +18,9 @@ Enable JSX for Template Literal Tags based projects.
 
 
 ### Example
+
+See [test/index.jsx](./test/index.jsx) to see all features applied.
+
 ```js
 // your template literal library of choice
 const {render, html} = require('uhtml-ssr');
@@ -31,12 +34,7 @@ const {bind, createPragma} = require('jsx2tag');
 const h = createPragma(html);
 
 // any component (passed as template value)
-// currently, only ube is compatible with this
-// https://github.com/WebReflection/ube#readme
-function Bold() {
-  // meaningless as component, just as example
-  return 'strong';
-}
+const Bold = ({children}) => html`<strong>${children}</strong>`;
 
 // any generic value
 const test = 123;

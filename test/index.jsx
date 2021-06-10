@@ -8,11 +8,16 @@ const {bind, createPragma} = require('../cjs/index.js');
 const h = createPragma(html);
 
 // any component (passed as template value)
-function Bold() {
-  return 'strong';
+const Bold = ({children}) => html`<strong>${children}</strong>`;
+
+class Span {
+  constructor({id, children}) {
+    return html`<span id=${id}>${children}</span>`;
+  }
 }
 
-// test ube
+// This is specific for ube or classes with a `tagName`
+// these well be used as interpolations values
 function World() { return World.tagName; }
 World.tagName = 'div';
 
@@ -23,7 +28,7 @@ const test = 123;
 const myDocument = (
   <p class="what" test={bind(test)} onClick={console.log}>
     <Bold>Hello</Bold>, <input type="password" disabled={true} />
-    <span id="greetings">Hello</span> <World />
+    <Span id="greetings">Hello</Span> <World />
   </p>
 );
 

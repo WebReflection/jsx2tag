@@ -4,6 +4,10 @@
 
 Enable JSX for Template Literal Tags based projects.
 
+  * [uhtml live demo](https://codepen.io/WebReflection/pen/KKWxXYY?editors=0010)
+  * [uland live demo](https://codepen.io/WebReflection/pen/bGqxYpZ?editors=0010)
+  * [lit-html live demo](https://codepen.io/WebReflection/pen/abJaVzm?editors=0010)
+
 
 ### Features
 

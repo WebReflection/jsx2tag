@@ -12,7 +12,7 @@ Enable JSX for Template Literal Tags based projects.
 
 **TODO**
 
--[ ] the pragma currently understands common `html` and `svg` template literal tag library, but it's not clear how to have both simultaneously
+- [ ] the pragma currently understands common `html` and `svg` template literal tag library, but it's not clear how to have both simultaneously
 
 
 ### Example

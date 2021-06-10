@@ -38,7 +38,9 @@ export const createPragma = (tag, cache) => {
     cache = new Map;
   return function h(entry, attributes, ...children) {
     const component = typeof entry === 'function';
+    // avoid dealing with ube classes
     if (component && !('tagName' in entry)) {
+      // pass {...props, children} to the component
       (attributes || (attributes = {})).children = children;
       return 'prototype' in entry ? new entry(attributes) : entry(attributes);
     }

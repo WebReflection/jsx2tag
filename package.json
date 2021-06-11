@@ -1,6 +1,6 @@
 {
   "name": "jsx2tag",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Enable JSX for Template Literal Tags based projects",
   "main": "./cjs/index.js",
   "types": "./index.d.ts",

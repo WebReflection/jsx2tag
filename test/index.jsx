@@ -67,12 +67,13 @@ const fragment = (
   <>
     <rect x={1} y="2"></rect>
     <rect x="3" y={4}></rect>
+    OK
   </>
 );
 
 assert(
   fragment,
-  '<rect x="1" y="2" /><rect x="3" y="4" />'
+  '<rect x="1" y="2" /><rect x="3" y="4" />OK'
 );
 
 console.log('Test: \x1b[1mOK\x1b[0m');

@@ -1,5 +1,4 @@
-/** @jsx h */
-/** @jsxFrag h */
+/** @jsx h *//** @jsxFrag h */
 
 // your template literal library of choice
 const {render, html, svg} = require('uhtml-ssr');

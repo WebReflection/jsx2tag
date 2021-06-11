@@ -70,3 +70,40 @@ Specify `pragma` and `pragmaFrag` or use this syntax on top:
 Otherwise, follow [@Robbb_J](https://twitter.com/Robbb_J) post [about minimal requirements](https://blog.r0b.io/post/using-jsx-without-react/) and you'll be good.
 
 A huge thanks to him for writing such simple, step by step, guide.
+
+## How to render keyed components
+
+Each library might have its own way, but the gist of this feature, whenever available, is that the `key` property is all we're after:
+
+```js
+/** @jsx h *//** @jsxFrag h */
+
+import {createPragma} from '//unpkg.com/jsx2tag?module';
+import {render, html} from '//unpkg.com/uhtml?module';
+
+const h = createPragma(html);
+
+const App = ({name, key}) => html.for(App, key)`Hello ${name} 👋`;
+
+render(document.body, <App name="JSX" key={'specific-key'} />);
+```
+
+Conditional *keyed* components are also possible: here another *uhtml* example:
+
+```js
+/** @jsx h *//** @jsxFrag h */
+
+import {createPragma} from '//unpkg.com/jsx2tag?module';
+import {render, html} from '//unpkg.com/uhtml?module';
+
+const h = createPragma(html);
+
+const App = ({name, key}) => {
+  const tag = key ? html.for(App, key) : html;
+  return tag`Hello ${name} 👋`;
+};
+
+render(document.body, <App name="JSX" key={'specific-key'} />);
+```
+
+In few words, there's literally *nothing* stopping template literal tags libraries to be *keyed* compatible.

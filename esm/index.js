@@ -17,6 +17,7 @@ const empty = /^(?:area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta
 const er = '<☠>';
 const re = /^on([A-Z])/;
 const place = (_, $) => ('@' + $.toLowerCase());
+const fragment = ['', ''];
 
 /**
  * @typedef {object} attr - a DOM attribute facade with a `name` and a `value`.
@@ -80,12 +81,19 @@ export const createPragma = (
   } = {}
 ) => function h(entry, attributes, ...children) {
   const component = typeof entry === 'function';
-  // avoid dealing with µbe classes
+
+  // handle fragments as tag array
+  if (component && entry === h)
+    return tag.call(this, fragment, children);
+
+  // handle classes and component callbacks (keep µbe classes around)
   if (component && !('tagName' in entry)) {
     // pass {...props, children} to the component
     (attributes || (attributes = {})).children = children;
     return 'prototype' in entry ? new entry(attributes) : entry(attributes);
   }
+
+  // handler µbe classes or regular HTML/SVG/XML cases
   const template = ['<'];
   const args = [template];
   let i = 0;
@@ -101,6 +109,8 @@ export const createPragma = (
     args.push(value);
     i = template.push('"') - 1;
   }
+
+  // handle children or self-closing XML tags
   const {length} = children;
   template[i] += (length || !xml) ? '>' : ' />';
   for (let child, j = 0; j < length; j++) {
@@ -112,6 +122,8 @@ export const createPragma = (
       i = template.push('') - 1;
     }
   }
+
+  // handle closing tag
   if (
     length || (
       !xml && (
@@ -128,9 +140,12 @@ export const createPragma = (
     else
       template[i] += `</${entry}>`;
   }
+
+  // be sure the template argument is always the same
   const whole = template.join(er);
   args[0] = cache.get(whole) || template;
   if (args[0] === template)
     cache.set(whole, template);
+
   return tag.apply(this, args);
 };

@@ -1,3 +1,6 @@
+/** @jsx h */
+/** @jsxFrag h */
+
 // your template literal library of choice
 const {render, html, svg} = require('uhtml-ssr');
 
@@ -58,6 +61,18 @@ const svgDocument = (
 assert(
   svgDocument,
   '<rect x="10" y="20" />'
+);
+
+const fragment = (
+  <>
+    <rect x={1} y="2"></rect>
+    <rect x="3" y={4}></rect>
+  </>
+);
+
+assert(
+  fragment,
+  '<rect x="1" y="2" /><rect x="3" y="4" />'
 );
 
 console.log('Test: \x1b[1mOK\x1b[0m');

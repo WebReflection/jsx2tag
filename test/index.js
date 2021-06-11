@@ -1,3 +1,6 @@
+/** @jsx h */
+
+/** @jsxFrag h */
 // your template literal library of choice
 const {
   render,
@@ -69,4 +72,12 @@ const svgDocument = h("rect", {
   y: "20"
 });
 assert(svgDocument, '<rect x="10" y="20" />');
+const fragment = h(h, null, h("rect", {
+  x: 1,
+  y: "2"
+}), h("rect", {
+  x: "3",
+  y: 4
+}));
+assert(fragment, '<rect x="1" y="2" /><rect x="3" y="4" />');
 console.log('Test: \x1b[1mOK\x1b[0m');

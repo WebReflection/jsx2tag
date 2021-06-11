@@ -26,6 +26,9 @@ Enable JSX for Template Literal Tags based projects.
 See [test/index.jsx](./test/index.jsx) to see all features applied.
 
 ```js
+/** @jsx h */
+/** @jsxFrag h */
+
 // your template literal library of choice
 const {render, html} = require('uhtml-ssr');
 
@@ -57,6 +60,13 @@ render(String, myDocument);
 
 ## How To Transpile JSX
 
-Follow [@Robbb_J](https://twitter.com/Robbb_J) post [about minimal requirements](https://blog.r0b.io/post/using-jsx-without-react/) and you'll be good.
+Specify `pragma` and `pragmaFrag` or use this syntax on top:
+
+```js
+/** @jsx h */
+/** @jsxFrag h */
+```
+
+Otherwise, follow [@Robbb_J](https://twitter.com/Robbb_J) post [about minimal requirements](https://blog.r0b.io/post/using-jsx-without-react/) and you'll be good.
 
 A huge thanks to him for writing such simple, step by step, guide.

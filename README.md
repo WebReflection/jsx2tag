@@ -26,8 +26,7 @@ Enable JSX for Template Literal Tags based projects.
 See [test/index.jsx](./test/index.jsx) to see all features applied.
 
 ```js
-/** @jsx h */
-/** @jsxFrag h */
+/** @jsx h *//** @jsxFrag h */
 
 // your template literal library of choice
 const {render, html} = require('uhtml-ssr');
@@ -73,7 +72,29 @@ A huge thanks to him for writing such simple, step by step, guide.
 
 ## How to render keyed components
 
-Each library might have its own way, but the gist of this feature, whenever available, is that the `key` property is all we're after:
+The `config` object accepts a `keyed(entry, props)` callback that can return a keyed version of the component.
+
+```js
+/** @jsx h *//** @jsxFrag h */
+import {createPragma} from '//unpkg.com/jsx2tag?module';
+import {render, html} from '//unpkg.com/uhtml?module';
+
+// used as weakMap key for global keyed references
+const refs = {};
+const h = createPragma(html, {
+  // invoked when a key={value} is found in the node
+  // to render regular elements (or µbe classes)
+  keyed(tagName, {key}) {
+    const ref = refs[tagName] || (refs[tagName] = {});
+    return html.for(ref, key);
+  }
+});
+
+render(document.body, <div key={'unique-id'} />);
+
+```
+
+Alternatively, each library might have its own way, but the gist of this feature, whenever available, is that the `key` property is all we're after:
 
 ```js
 /** @jsx h *//** @jsxFrag h */
@@ -88,7 +109,9 @@ const App = ({name, key}) => html.for(App, key)`Hello ${name} 👋`;
 render(document.body, <App name="JSX" key={'specific-key'} />);
 ```
 
-Conditional *keyed* components are also possible: here another *uhtml* example:
+Conditional *keyed* components are also possible.
+
+Here another *uhtml* example:
 
 ```js
 /** @jsx h *//** @jsxFrag h */

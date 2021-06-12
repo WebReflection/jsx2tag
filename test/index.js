@@ -73,6 +73,7 @@ const svgDocument = h("rect", {
 });
 assert(svgDocument, '<rect x="10" y="20" />');
 const fragment = h(h, null, h("rect", {
+  key: Math.random(),
   x: 1,
   y: "2"
 }), h("rect", {

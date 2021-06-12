@@ -1,5 +1,6 @@
+export function defaultAttribute(name: string, value: any): attr;
 export function bind(value: any): Bound;
-export function createPragma(tag: Function, { attribute, cache, xml }?: config): Function;
+export function createPragma(tag: Function, { attribute, keyed, cache, xml }?: config): Function;
 /**
  * - a DOM attribute facade with a `name` and a `value`.
  */
@@ -21,6 +22,11 @@ export type config = {
      * - a `callback(name, value)` to return a `{name, value}` literal.
      */
     attribute?: Function;
+    /**
+     * - a `callback(entry, props)` to return a keyed version of the `tag`.
+     * If `null` or `undefined` is returned, the attribute is skipped all along.
+     */
+    keyed?: Function;
     /**
      * - a cache for already known/parsed templates.
      */

@@ -64,7 +64,7 @@ assert(
 
 const fragment = (
   <>
-    <rect x={1} y="2"></rect>
+    <rect key={Math.random()} x={1} y="2"></rect>
     <rect x="3" y={4}></rect>
     OK
   </>

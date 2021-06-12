@@ -52,6 +52,7 @@ const defaultAttribute = (name, value) => {
   }
   return {name: name.replace(re, place), value};
 };
+exports.defaultAttribute = defaultAttribute;
 
 /**
  * Allow binding values directly to nodes via `name={bind(value)}`.
@@ -64,6 +65,8 @@ exports.bind = bind;
 /**
  * @typedef {object} config - optionally configure the pragma function
  * @property {function} [attribute=defaultAttribute] - a `callback(name, value)` to return a `{name, value}` literal.
+ * @property {function} [keyed=()=>tag] - a `callback(entry, props)` to return a keyed version of the `tag`.
+ *                               If `null` or `undefined` is returned, the attribute is skipped all along.
  * @property {Map<string,string[]>} [cache=new Map()] - a cache for already known/parsed templates.
  * @property {boolean} [xml=false] - treat nodes as XML with self-closing tags.
  */
@@ -78,11 +81,13 @@ const createPragma = (
   tag,
   {
     attribute = defaultAttribute,
+    keyed = () => tag,
     cache = new Map,
     xml = false
   } = {}
 ) => function h(entry, attributes, ...children) {
   const component = typeof entry === 'function';
+  let isKeyed = false;
 
   // handle fragments as tag array
   if (component && entry === h)
@@ -106,10 +111,16 @@ const createPragma = (
   else
     template[i] += entry;
   for (const key in attributes) {
-    const {name, value} = attribute(key, attributes[key]);
-    template[i] += ` ${name}="`;
-    args.push(value);
-    i = template.push('"') - 1;
+    if (key === 'key')
+      isKeyed = !isKeyed;
+    else {
+      const attr = attribute(key, attributes[key]);
+      if (attr != null) {
+        template[i] += ` ${attr.name}="`;
+        args.push(attr.value);
+        i = template.push('"') - 1;
+      }
+    }
   }
 
   // handle children or self-closing XML tags
@@ -149,6 +160,6 @@ const createPragma = (
   if (args[0] === template)
     cache.set(whole, template);
 
-  return tag.apply(this, args);
+  return (isKeyed ? keyed(entry, attributes) : tag).apply(this, args);
 };
 exports.createPragma = createPragma;

@@ -20,11 +20,11 @@ export type attr = {
 export type config = {
     /**
      * - a `callback(name, value)` to return a `{name, value}` literal.
+     * If `null` or `undefined` is returned, the attribute is skipped all along.
      */
     attribute?: Function;
     /**
      * - a `callback(entry, props)` to return a keyed version of the `tag`.
-     * If `null` or `undefined` is returned, the attribute is skipped all along.
      */
     keyed?: Function;
     /**

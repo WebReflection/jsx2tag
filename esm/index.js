@@ -62,8 +62,8 @@ export const bind = value => new Bound(value);
 /**
  * @typedef {object} config - optionally configure the pragma function
  * @property {function} [attribute=defaultAttribute] - a `callback(name, value)` to return a `{name, value}` literal.
+ *  If `null` or `undefined` is returned, the attribute is skipped all along.
  * @property {function} [keyed=()=>tag] - a `callback(entry, props)` to return a keyed version of the `tag`.
- *                               If `null` or `undefined` is returned, the attribute is skipped all along.
  * @property {Map<string,string[]>} [cache=new Map()] - a cache for already known/parsed templates.
  * @property {boolean} [xml=false] - treat nodes as XML with self-closing tags.
  */
@@ -84,7 +84,6 @@ export const createPragma = (
   } = {}
 ) => function h(entry, attributes, ...children) {
   const component = typeof entry === 'function';
-  let isKeyed = false;
 
   // handle fragments as tag array
   if (component && entry === h)
@@ -100,6 +99,7 @@ export const createPragma = (
   // handler µbe classes or regular HTML/SVG/XML cases
   const template = ['<'];
   const args = [template];
+  let isKeyed = false;
   let i = 0;
   if (component) {
     args.push(entry);

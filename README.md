@@ -72,7 +72,7 @@ A huge thanks to him for writing such simple, step by step, guide.
 
 ## How to render keyed components
 
-The `config` object accepts a `keyed(entry, props)` callback that can return a keyed version of the component.
+The `config` object accepts a `keyed(tagName, props)` callback that can return a keyed version of the component.
 
 ```js
 /** @jsx h *//** @jsxFrag h */

@@ -1,10 +1,6 @@
 /** @jsx h *//** @jsxFrag h */
 
-// your template literal library of choice
-const {render, html, svg} = require('uhtml-ssr');
-
-// this module
-const {bind, createPragma} = require('../cjs/index.js');
+const {render, html, bind, jsx2} = require('./jsx.js');
 
 const assert = (value, expected) => {
   /* c8 ignore start */
@@ -16,8 +12,7 @@ const assert = (value, expected) => {
   /* c8 ignore stop */
 };
 
-// create your `h` / pragma function
-let h = createPragma(html);
+let h = jsx2.html;
 
 // any component (passed as template value)
 const Bold = ({children}) => html`<strong>${children}</strong>`;
@@ -49,9 +44,7 @@ assert(
   `<p class="what" test="123"><strong>Hello</strong>, <input type="password" disabled><span id="greetings">Hello</span> <div></div></p>`
 );
 
-h = createPragma(svg, {
-  xml: true
-});
+h = jsx2.svg;
 
 const svgDocument = (
   <rect x={10} y="20"></rect>
@@ -76,3 +69,11 @@ assert(
 );
 
 console.log('Test: \x1b[1mOK\x1b[0m');
+
+const svg = (
+  <svg>
+    <g transform="translate(20,20)">
+      <text>hello</text>
+    </g>
+  </svg>
+);

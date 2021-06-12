@@ -8,7 +8,7 @@
     "build": "npm run cjs && npm run test && npm run types",
     "cjs": "ascjs --no-default esm cjs",
     "coveralls": "c8 report --reporter=text-lcov | coveralls",
-    "test": "cd test; npx babel index.jsx -d ./ && c8 node index.js > /dev/null && rm -rf ../coverage && mv coverage ../ && cd .. && c8 report --reporter=text",
+    "test": "cd test; npx babel index.jsx -d ./ && c8 node index.js && rm -rf ../coverage && mv coverage ../ && cd .. && c8 report --reporter=text",
     "types": "tsc --declaration --allowJs --emitDeclarationOnly --outDir ./ esm/index.js"
   },
   "keywords": [

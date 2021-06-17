@@ -4,8 +4,11 @@
       "@babel/plugin-transform-react-jsx",
       {
         "pragma": "h",
-        "pragmaFrag": "h"
-      }]
+        "pragmaFrag": "h",
+        "throwIfNamespace": false
+      }
+    ],
+    ["module:@ungap/plugin-transform-static-jsx"]
   ],
   "comments": true
 }

@@ -19,6 +19,7 @@ Enable JSX for Template Literal Tags based projects.
   * a `bind` utility to mimic `.prop=${value}` in the template
   * automatic `onEventName` to `@eventName` conversion
   * automatic `?prop=${value}` conversion in the template, when the property is boolean
+  * optionally boost performance via [@ungap/plugin-transform-static-jsx](https://github.com/ungap/plugin-transform-static-jsx#readme), able to create best template literals tags' arguments
 
 
 ### Example

@@ -111,14 +111,18 @@ const createPragma = (
   else
     template[i] += entry;
   for (const key in attributes) {
-    if (key === 'key')
-      isKeyed = !isKeyed;
-    else {
-      const attr = attribute(key, attributes[key]);
-      if (attr != null) {
-        template[i] += ` ${attr.name}="`;
-        args.push(attr.value);
-        i = template.push('"') - 1;
+    if (key.length) {
+      if (key[0] === ':')
+        template[i] += ` ${key.slice(1)}="${attributes[key]}"`;
+      else if (key === 'key')
+        isKeyed = !isKeyed;
+      else {
+        const attr = attribute(key, attributes[key]);
+        if (attr != null) {
+          template[i] += ` ${attr.name}="`;
+          args.push(attr.value);
+          i = template.push('"') - 1;
+        }
       }
     }
   }

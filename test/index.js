@@ -46,12 +46,12 @@ World.tagName = 'div'; // any generic value
 const test = 123; // test it!
 
 const myDocument = h("p", {
-  ":class": "what",
+  "\x01class": "what",
   nope: null,
   test: bind(test),
   onClick: console.log
 }, h(Bold, null, "Hello"), ", ", h("input", {
-  ":type": "password",
+  "\x01type": "password",
   disabled: true
 }), h(Span, {
   id: "greetings"
@@ -60,19 +60,19 @@ assert(myDocument, `<p class="what" test="123"><strong>Hello</strong>, <input ty
 h = jsx2.svg;
 const svgDocument = h("rect", {
   x: 10,
-  ":y": "20"
+  "\x01y": "20"
 });
 assert(svgDocument, '<rect x="10" y="20" />');
 const fragment = h(h, null, h("rect", {
   key: Math.random(),
-  x: 1,
-  ":y": "2"
+  x: '1',
+  "\x01y": "2"
 }), h("rect", {
-  ":x": "3",
+  "\x01x": "3",
   y: 4
 }), "OK");
 assert(fragment, '<rect x="1" y="2" /><rect x="3" y="4" />OK');
 console.log('Test: \x1b[1mOK\x1b[0m');
 const svg = h("svg", null, h("g", {
-  ":transform": "translate(20,20)"
+  "\x01transform": "translate(20,20)"
 }, h("text", null, "hello")));

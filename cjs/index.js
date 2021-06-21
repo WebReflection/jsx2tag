@@ -15,7 +15,7 @@ class Bound {
 }
 
 const empty = /^(?:area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/i;
-const er = '<☠>';
+const er = '\x01';
 const re = /^on([A-Z])/;
 const place = (_, $) => ('@' + $.toLowerCase());
 const fragment = ['', ''];
@@ -112,7 +112,7 @@ const createPragma = (
     template[i] += entry;
   for (const key in attributes) {
     if (key.length) {
-      if (key[0] === ':')
+      if (key[0] === er)
         template[i] += ` ${key.slice(1)}="${attributes[key]}"`;
       else if (key === 'key')
         isKeyed = !isKeyed;

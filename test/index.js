@@ -76,3 +76,12 @@ console.log('Test: \x1b[1mOK\x1b[0m');
 const svg = h("svg", null, h("g", {
   "\x01transform": "translate(20,20)"
 }, h("text", null, "hello")));
+
+function MyElement({
+  children
+}) {
+  return h("div", null, children);
+}
+
+const me = h(MyElement, null, "Some Text ", h("b", null, "and some more text"));
+assert(me, '<div>Some Text <b>and some more text</b></div>');

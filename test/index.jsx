@@ -77,3 +77,18 @@ const svg = (
     </g>
   </svg>
 );
+
+function MyElement({ children }) {
+  return <div>{children}</div>;
+}
+
+const me = (
+  <MyElement>
+    Some Text <b>and some more text</b>
+  </MyElement>
+);
+
+assert(
+  me,
+  '<div>Some Text <b>and some more text</b></div>'
+);

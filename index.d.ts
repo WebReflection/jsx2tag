@@ -30,7 +30,7 @@ export type config = {
     /**
      * - a cache for already known/parsed templates.
      */
-    cache?: any;
+    cache?: Map<string, string[]>;
     /**
      * - treat nodes as XML with self-closing tags.
      */

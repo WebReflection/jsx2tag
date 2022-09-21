@@ -125,7 +125,7 @@ export const createPragma = (
   }
 
   // handle children or self-closing XML tags
-  const {length} = children;
+  const {length} = (children = children.flat());
   template[i] += (length || !xml) ? '>' : ' />';
   for (let child, j = 0; j < length; j++) {
     child = children[j];
